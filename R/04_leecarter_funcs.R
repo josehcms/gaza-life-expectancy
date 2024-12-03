@@ -1,5 +1,5 @@
 ################################################################################
-### Script: Lee-Carter Projection function (with drift correction)
+### Script: Lee-Carter Projection function (with jump-off correction)
 ### Author: josehcms
 ### Last updated: 2024-11-30
 ################################################################################

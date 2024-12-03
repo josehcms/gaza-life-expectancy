@@ -96,7 +96,7 @@ for( this_scenario in list_scenarios ){
         data.table(
           lt_label = 'War', # label
           scenario = this_scenario,
-          ref_period = date_ref_decimal, # reference period
+          ref_period = round( date_ref_decimal, 2 ), # reference period
           preston_life_table( x = x, nMx = nMx, Sex = this_sex ) # run life table
         )
       )

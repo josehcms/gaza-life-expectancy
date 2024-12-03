@@ -4,7 +4,8 @@
 ### Last updated: 2024-11-30
 ################################################################################
 
-### Function for estimating 1a0 from 0M1 using CD West life table #------------- 
+### Function for estimating 1a0 from 1M0 #--------------------------------------
+# using information from table 3_3 of Preston et al book
 a0_1_preston = 
   function( M0_1, Sex ){
     
@@ -38,7 +39,8 @@ a0_1_preston =
   }
 ################################################################################
 
-### Function for estimating 1a4 from 0M1 using CD West life table #-------------
+### Function for estimating 4a1 from 1M0 #--------------------------------------
+# using information from table 3_3 of Preston et al book
 a1_4_preston = 
   function( M0_1, Sex ){
     
