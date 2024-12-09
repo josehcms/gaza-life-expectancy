@@ -92,10 +92,6 @@ for( this_year in list_years ){
 # save only the adjusted version using igme, which is the one we will use
 fwrite( lt_gaza[ lt_label == 'Adjusted' ],
         file = 'outputs/02_life_tables_gaza_2017_2022.csv',
-        bom = TRUE,
-        sep = ';' )
+        bom = TRUE )
 
 ################################################################################
-
-
-lt_gaza[ ref_period == 2020.5 & sex == 'Both' & x == 0  ]

@@ -221,6 +221,5 @@ expos_long =
 
 fwrite( expos_long,
         file = 'outputs/01_prewar_and_war_population_exposures_long.csv',
-        bom = TRUE,
-        sep = ';' )
+        bom = TRUE )
 ################################################################################

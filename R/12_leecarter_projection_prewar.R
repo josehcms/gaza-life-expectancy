@@ -23,7 +23,7 @@ source( 'R/02_pyl_funcs.R' )
 ### Lee-Carter projection #-----------------------------------------------------
 
 # read 2017-2022 data
-lt_adjusted = fread( 'outputs/02_life_tables_gaza_2017_2022.csv', sep = ';' )
+lt_adjusted = fread( 'outputs/02_life_tables_gaza_2017_2022.csv' )
 
 # list sexes for loop
 list_sex = c( 'Males', 'Females' )
@@ -156,7 +156,6 @@ lt_lcproj_prewar =
 # save only the projected for Oct 1st 2022 - Sep 31st 2023
 fwrite( lt_lcproj_prewar,
         file = 'outputs/03_life_tables_gaza_projected_oct2022_sep2023.csv',
-        bom = TRUE,
-        sep = ';' )
+        bom = TRUE )
 
 ################################################################################
