@@ -22,7 +22,7 @@ ltnowar = fread( 'outputs/03_life_tables_gaza_projected_oct2022_sep2023.csv' )
 
 ### Calculate mortality rates during war for different scenarios #--------------
 
-# Merge exposures and casualties with lee-carter proj nMxs for the period Oct 1 2022 - Oct 1 2023
+# Merge exposures and casualties with Lee-Carter projection nMxs for the period Oct 1 2022 - Oct 1 2023
 wardeaths_dt =
   merge(
     expos_dt[ , 

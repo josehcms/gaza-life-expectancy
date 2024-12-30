@@ -20,7 +20,7 @@ source( 'R/02_pyl_funcs.R' )
 ################################################################################
 
 ### Read data #-----------------------------------------------------------------
-# read pop and change format to data.table for data analysis
+# read population data and change format to data.table for data analysis
 pop_dt = 
   read.xlsx( main_file, 
              sheet = 'Population',
@@ -28,7 +28,7 @@ pop_dt =
   ) %>% 
   as.data.table
 
-# read casualties and change format to data.table for data analysis
+# read casualties data and change format to data.table for data analysis
 casu_dt = 
   read.xlsx( main_file, 
              sheet = 'Casualties',
@@ -40,7 +40,7 @@ casu_dt =
 total_scenario2 = 41615
 total_scenario3 = 51615
 
-# get proportions of reported data so we can do a pro-rata distribution for scenarios
+# get proportions of reported data so we can do a pro-rata distribution for each scenario
 casu_dt[ Sex != 'Both', CasualtiesProp := Casualties / sum( Casualties ) ] 
 casu_dt[ Sex == 'Both', CasualtiesProp := Casualties / sum( Casualties ) ] 
 
@@ -54,7 +54,7 @@ casu_dt[ , Scenario3 := CasualtiesProp * total_scenario3 ]
 ### These will be used later for calculating exposures
 
 ### Create new dataset with the interpolated population for Oct 1, 2022
-# this will be used to combine male and female deaths from the Lee-Carter projections
+# this will be used to combine male and female deaths from the Lee-Carter projection
 pop_oct1_2022 =
   data.table(
     DataLabel = 'Population (interpolated) by age and sex (Oct 2022) - Gaza',

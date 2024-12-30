@@ -30,9 +30,7 @@ list_sex = c( 'Males', 'Females' )
 
 # projection time, to be added to the last estimate (here: 2022.5)
 # we want 2023.25 = 2022.5 + 0.75
-# we will also include 2017.5, 2018.5,... 2022.5 
-# to compare the Lee-Carter estimated with the inputs
-projection_times = c( seq( -5, 0 ), 0.75 ) 
+projection_times = c( 0.75 ) 
 
 # prepare empty dataset to store the life tables from projections
 lt_lcproj = data.table()
@@ -83,41 +81,12 @@ for( this_sex in list_sex ){
 
 ################################################################################
 
-### Eval projections #----------------------------------------------------------
-
-# create temp file for diagnostic plot
-temp_lt =
-  rbind(
-    lt_adjusted[ sex != 'Both', .( lt_label, ref_period, sex, x, nMx ) ],
-    lt_lcproj[ , .( lt_label, ref_period, sex, x, nMx )]
-  )
-
-# plot lee-carter vs observed
-ggplot( temp_lt ) +
-  geom_line( aes( x = x, y = nMx, color = lt_label, linetype =  lt_label ),
-             linewidth = 1.25 ) +
-  scale_y_log10( name = 'log10( nMx)' ) +
-  scale_x_continuous( name = 'Age', breaks = seq( 0, 80, 20 ) ) +
-  scale_color_manual( name = '', values = c( 'blue', 'red' ) ) +
-  scale_linetype_manual( name = '', values = c( 'solid', 'twodash' ) ) + 
-  facet_grid( sex ~ ref_period ) +
-  labs( title = 'Mortality estimates, Gaza - 2017-2023',
-        subtitle = 'UN-IGME-adjusted estimates and Lee-Carter (retro)projections' ) +
-  theme_bw() +
-  theme(
-    legend.position = 'bottom'
-  )
-
-# remove temp life tables
-rm( temp_lt )
-################################################################################
-
 ### Combine sexes for obtaining both sexes projections #------------------------
 
 ### read population exposures
 expos_dt = fread( 'outputs/01_prewar_and_war_population_exposures.csv' )
   
-# use pre-war exposures and lee-carter nMx by sex to get nMx 
+# use pre-war exposures and Lee-Carter nMx by sex to get nMx 
 # for both sexes for the projected period
 mx_lcproj_both =
   merge(

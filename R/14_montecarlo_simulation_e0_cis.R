@@ -96,7 +96,7 @@ e0_mcsim =
                        mxsim_matrix[ ,j ] = rpois( niter, lambda = Dx[ j ] ) / Ex[ j ]
                      }
                      
-                     # simulate lts and save e0s for each of the 10000 schedule
+                     # simulate life tables and save e0s for each of the 10000 schedule
                      e0_sim = sapply( 1:niter, 
                                       function( k ){
                                         mx = mxsim_matrix[ k, ]

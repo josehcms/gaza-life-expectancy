@@ -37,7 +37,7 @@ deaths_dt =
   ) %>% 
   as.data.table
 
-# read igme Palestine for under-5 mortality adjustment
+# read UN IGME State of Palestine for under-5 mortality adjustment
 igme_dt = fread( igme_file )
 ################################################################################
 
@@ -89,7 +89,7 @@ for( this_year in list_years ){
 
 ### Save #----------------------------------------------------------------------
 
-# save only the adjusted version using igme, which is the one we will use
+# save only the adjusted version using UN IGME, which is the one we will use
 fwrite( lt_gaza[ lt_label == 'Adjusted' ],
         file = 'outputs/02_life_tables_gaza_2017_2022.csv',
         bom = TRUE )

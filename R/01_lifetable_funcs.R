@@ -73,9 +73,9 @@ a1_4_preston =
 
 ### Main Life table function #--------------------------------------------------
 
-### Function for estimating life table using Preston book's rationale
-### Additional parameters q0_1 and q0_5 added for users to adjust in case 
-### they want to add other estimates for these measures
+### Function for estimating life table using Preston book's example
+### Additional parameters q0_1 and q0_5 added for adjustment using 
+### external estimates for these parameters
 preston_life_table = 
   function( x, 
             nMx = NULL, 
@@ -103,7 +103,8 @@ preston_life_table =
     n = c( diff( x ), Inf )
     # Get 1M0 for estimating the 1a0 and 1a4 using the Preston book formula
     M0_1 = nMx[ x == 0 ]
-    # Estimate nax, for x < 5 use formula, for open age group 1/nMx, and n/2 for others
+    # Estimate nax, for x < 5 use formula, for open age group 1/nMx, and n/2 for 
+    # other age groups
     nax = n / 2
     nax[ 1 ]   = a0_1_preston( M0_1, Sex )
     nax[ 2 ]   = a1_4_preston( M0_1, Sex )
@@ -113,7 +114,7 @@ preston_life_table =
     nqx = ( n * nMx ) / ( 1 + ( n - nax ) * nMx )
     nqx[ len ] = 1
     
-    # if we have other 1q0 and 1q4 we want to use:
+    # using external values of 1q0 and 5q0:
     if( !is.null( q0_1 ) ){
       nqx[ 1 ] = q0_1
     }
@@ -130,7 +131,7 @@ preston_life_table =
     for( i in 2: len ){
       lx[ i ] = lx[ i - 1 ] * npx[ i - 1 ]
     }
-    # Calculate ndx by applying probs of dying to lx
+    # Calculate ndx by applying probabilities of dying to lx
     ndx = lx * nqx 
     # Calculate person-years lived in each age group
     nLx = numeric( len )
@@ -138,12 +139,12 @@ preston_life_table =
       nLx[ i ] = ndx[ i ] * nax[ i ] + lx[ i + 1 ] * n[ i ]
     }
     nLx[ len ] = ndx[ len ] * nax[ len ]
-    # Calculate the cumulative person-years lived from that age
+    # Calculate cumulative person-years lived from age x onwards
     Tx = rev( cumsum( rev( nLx ) ) )
     # Calculate life expectancy
     ex = Tx / lx 
     
-    # adjust 1M0 and 4M1 if we used q0_1 or q_5
+    # adjust 1M0 and 4M1 based on q0_1 or q0_5
     if( !is.null( q0_1 ) | !is.null( q0_5 ) ){
       nMx[ 1:2 ] = ndx[ 1:2 ] / nLx[ 1:2 ]
     }
