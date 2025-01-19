@@ -90,12 +90,14 @@ preston_life_table =
     
     if( ! is.null( nEx ) & !is.null( nDx ) ){
       # Stop if number of age groups do not match with nEx and nDx vectors
-      stopifnot( len == length( nEx ) | len == length( nDx ) )    
+      stopifnot( len == length( nEx ) & len == length( nDx ) )    
       # Calculate nMx
       nMx = nDx / nEx
     } else if( !is.null( nMx ) ){
       stopifnot( len == length( nMx ) ) 
-    } else{
+    } 
+    
+    if( is.null( nMx ) & ( is.null( nEx ) & is.null( nDx ) ) ){
       stop( 'You must input either (nMx) or (nDx and nEx)' )
     }
     

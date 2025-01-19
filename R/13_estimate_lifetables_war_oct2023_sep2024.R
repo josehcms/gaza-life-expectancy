@@ -25,22 +25,49 @@ ltnowar = fread( 'outputs/03_life_tables_gaza_projected_oct2022_sep2023.csv' )
 # Merge exposures and casualties with Lee-Carter projection nMxs for the period Oct 1 2022 - Oct 1 2023
 wardeaths_dt =
   merge(
-    expos_dt[ , 
+    expos_dt[ Sex != 'Both', 
               .( sex = Sex, x = AgeStart, 
                  Scenario1, Scenario2, Scenario3, expos1, expos2, expos3 ) ],
-    ltnowar[ , .( sex, x, nMx ) ],
+    ltnowar[ sex != 'Both', .( sex, x, nMx ) ],
     by = c( 'sex', 'x' )
   )
 
-# deaths by age and sex for the 3 different scenarios
-wardeaths_dt[ , deaths1 := expos1 * nMx + Scenario1 ]
-wardeaths_dt[ , deaths2 := expos2 * nMx + Scenario2 ]
-wardeaths_dt[ , deaths3 := expos3 * nMx + Scenario3 ]
+# deaths by age and sex for the 3 different scenarios - no war
+wardeaths_dt[ , deaths1nowar := expos1 * nMx ]
+wardeaths_dt[ , deaths2nowar := expos2 * nMx ]
+wardeaths_dt[ , deaths3nowar := expos3 * nMx ]
+
+# deaths by age and sex for the 3 different scenarios - war
+wardeaths_dt[ , deaths1war := deaths1nowar + Scenario1 ]
+wardeaths_dt[ , deaths2war := deaths2nowar + Scenario2 ]
+wardeaths_dt[ , deaths3war := deaths3nowar + Scenario3 ]
+
+# add both sexes
+wardeaths_dt =
+  rbind(
+    wardeaths_dt[ , .( sex, x, 
+                       deaths1nowar, deaths2nowar, deaths3nowar, 
+                       deaths1war, deaths2war, deaths3war,
+                       expos1, expos2, expos3 ) ],
+    wardeaths_dt %>% copy %>%
+      .[ , sex := 'Both' ] %>%
+      .[ , .( deaths1nowar = sum( deaths1nowar ),
+              deaths2nowar = sum( deaths2nowar ),
+              deaths3nowar = sum( deaths3nowar ),
+              deaths1war = sum( deaths1war ),
+              deaths2war = sum( deaths2war ),
+              deaths3war = sum( deaths3war ),
+              expos1 = sum( expos1 ),
+              expos2 = sum( expos2 ),
+              expos3 = sum( expos3 ) ),
+         .( sex, x ) ]
+  )
+
 
 # death rates for the 3 different scenarios
-wardeaths_dt[ , nMx1 := deaths1 / expos1 ]
-wardeaths_dt[ , nMx2 := deaths2 / expos2 ]
-wardeaths_dt[ , nMx3 := deaths3 / expos3 ]
+wardeaths_dt[ , nMx1 := deaths1war / expos1 ]
+wardeaths_dt[ , nMx2 := deaths2war / expos2 ]
+wardeaths_dt[ , nMx3 := deaths3war / expos3 ]
 ################################################################################
 
 ### Life tables for the different war scenarios #-------------------------------

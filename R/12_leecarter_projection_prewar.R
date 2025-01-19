@@ -91,19 +91,13 @@ expos_dt = fread( 'outputs/01_prewar_and_war_population_exposures.csv' )
 mx_lcproj_both =
   merge(
     lt_lcproj[ ref_period == 2023.25, .( sex, x, nMx ) ],
-    expos_dt[ , .( sex = Sex, x = AgeStart, expos0 ) ],
+    expos_dt[ Sex != 'Both', .( sex = Sex, x = AgeStart, expos0 ) ],
     by = c( 'sex', 'x' )
   ) %>%
   .[ , nDx := nMx * expos0 ] %>%
   .[ , sex := 'Both' ] %>%
-  .[ , .( nMx = sum( nDx ) / sum( expos0 ) ), .( sex, x ) ]
-
-mx_lcproj = 
-  rbind(
-    lt_lcproj[ ref_period == 2023.25, .( sex, x, nMx ) ],
-    mx_lcproj_both
-  ) %>%
-  setorder( sex, x )
+  .[ , .( nDx = sum( nDx ), expos0 = sum( expos0 ) ), .( sex, x ) ] %>%
+  .[ , nMx := nDx / expos0 ]
 
 # combine with life tables by sex from Lee-Carter
 lt_lcproj_prewar =
