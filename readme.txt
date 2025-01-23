@@ -1,6 +1,10 @@
-### Replication materials 
-### Title: Life expectancy losses in the Gaza Strip during the Oct 2023 – Sep 2024 period
-------------------------------------------------------------------------------------------
+Replication materials
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+### Life expectancy losses in the Gaza Strip during the period October, 2023, to September, 2024
+### Michel Guillot, Mohammed Draidi, Valeria Cetorelli, José H C Monteiro Da Silva, Ismail Lubbad
+### Lancet 2025; 405: 478–85
+### https://doi.org/10.1016/S0140-6736(24)02810-1
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 This github repository contains 3 directories:
 - R: R codes for replicating the analyses and results
